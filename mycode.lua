@@ -11,7 +11,6 @@ local Win = Lib:CreateWindow({
 local T1 = Win:CreateTab("Preset Teleports", 4483362458)
 local T2 = Win:CreateTab("Custom TP", 4483362458)
 local T3 = Win:CreateTab("Dabux Scanner", 4483362458)
-local T4 = Win:CreateTab("Auto-Loot & Sell", 4483362458)
 
 local Plrs = game:GetService("Players")
 local Http = game:GetService("HttpService")
@@ -21,10 +20,6 @@ local lp = Plrs.LocalPlayer
 local activeDabux = false
 local hopEnabled = false
 local returnPos = nil
-local activeLoot = false
-
-local vendorPos = Vector3.new(62.480, 3.125, 14019.114)
-local lootNames = {"Cuirass", "Dark_Horse", "Gold_Bar", "Gold_Chair", "Gold_Jar", "Gold_Mug", "Gold_Painting", "Gold_Statue", "Herb", "Silver_Chair"}
 
 local function tp(pos)
     local char = lp.Character
@@ -38,15 +33,21 @@ local function hop()
             local qot = queue_on_teleport or (syn and syn.queue_on_teleport)
             qot([[
                 repeat task.wait() until game:IsLoaded()
-loadstring(game:HttpGet('https://raw.githubusercontent.com/Tursin-xD/PartOfGUI/refs/heads/main/mycode.lua'))()
+                loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
+                task.wait(1)
+                if _G.RayfieldWindow then
+                    local t3 = _G.RayfieldWindow:CreateTab("Dabux Scanner", 4483362458)
+                    t3:CreateToggle({Name = "Auto-Dabux", CurrentValue = true})
+                end
             ]])
         end
 
+        local api = "https://roblox.com" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"
         local list = {}
-        local req = http_request or request or (syn and syn.request)
+        
+        local req = http_request or request or (syn and syn.request) or (fluxus and fluxus.request)
         if req then
-            local api = "https://roblox.com"
-            local res = req({Url = string.format(api, game.PlaceId), Method = "GET"})
+            local res = req({Url = api, Method = "GET"})
             if res and res.Body then
                 local json = Http:JSONDecode(res.Body)
                 if json and json.data then
@@ -58,6 +59,7 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/Tursin-xD/PartOfGUI/r
                 end
             end
         end
+
         if #list > 0 then
             Tele:TeleportToPlaceInstance(game.PlaceId, list[math.random(1, #list)], lp)
         else
@@ -83,7 +85,7 @@ end
 
 local inStr = ""
 T2:CreateInput({
-    Name = "POSITIONNN",
+    Name = "Enter Vector3 / Position",
     PlaceholderText = "Example: 114, 3.4, 13998",
     RemoveTextAfterFocusLost = false,
     Callback = function(val) inStr = val end
@@ -120,17 +122,25 @@ T3:CreateButton({
     Callback = function()
         cache = {}
         local opts = {}
+        local r, m = 0, 0
         for _, o in ipairs(workspace:GetDescendants()) do
             if o.Name == "Dabux_Random_Pos" or o.Name == "Dabux_Map_Pos" then
                 local p = o:FindFirstChildWhichIsA("ProximityPrompt", true)
                 if p and p.Enabled then
+                    if o.Name == "Dabux_Random_Pos" then r = r + 1 else m = m + 1 end
                     local label = o.Name .. " [#" .. (#opts + 1) .. "]"
                     cache[label] = o
                     table.insert(opts, label)
                 end
             end
         end
-        if #opts > 0 then drop:Refresh(opts) else drop:Refresh({"NOOO DABUX NOOOOOO DABUXXXXX"}) end
+        if #opts > 0 then 
+            drop:Refresh(opts) 
+            Lib:Notify({Title = "Scan Complete", Content = "Found " .. r .. " Random and " .. m .. " Map positions!", Duration = 4})
+        else 
+            drop:Refresh({"No parts found on this map"}) 
+            Lib:Notify({Title = "Scan Complete", Content = "No items found on this map.", Duration = 4})
+        end
     end
 })
 
@@ -147,6 +157,8 @@ T3:CreateToggle({
             local root = char and char:FindFirstChild("HumanoidRootPart")
             if root then returnPos = root.CFrame end
             
+            Lib:Notify({Title = "Auto-Farm", Content = "Started hunting Dabux items...", Duration = 3})
+            
             task.spawn(function()
                 while activeDabux do
                     local list = {}
@@ -156,7 +168,16 @@ T3:CreateToggle({
                             if p and p.Enabled and p.Parent then table.insert(list, o) end
                         end
                     end
-                    if #list == 0 then if hopEnabled then hop() end break end
+                    
+                    if #list == 0 then 
+                        Lib:Notify({Title = "Auto-Farm", Content = "Map cleared completely!", Duration = 4})
+                        if hopEnabled then 
+                            Lib:Notify({Title = "Server Hop", Content = "Initiating server transition...", Duration = 3})
+                            task.wait(1)
+                            hop() 
+                        end 
+                        break 
+                    end
                     
                     for _, o in ipairs(list) do
                         if not activeDabux then break end
@@ -182,25 +203,11 @@ T3:CreateToggle({
                     local char = lp.Character
                     local root = char and char:FindFirstChild("HumanoidRootPart")
                     if root then root.CFrame = returnPos end
+                    Lib:Notify({Title = "Auto-Farm", Content = "Returned to initial starting point.", Duration = 3})
                 end
             end)
+        else
+            Lib:Notify({Title = "Auto-Farm", Content = "Manually halted by operator.", Duration = 3})
         end
     end
 })
-
-T4:CreateToggle({
-    Name = "Auto-Loot Items & Sell",
-    CurrentValue = false,
-    Flag = "A2",
-    Callback = function(v)
-       Rayfield:Notify({
-	Title = "Disabled.",
-	Content = "Reason: Breaks whole code. and crashes the system.",
-	Duration = 6.5, 
-	Image = 4483345998,
-})
-
-                
-                  
-         end
-   })
