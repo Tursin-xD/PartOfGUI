@@ -83,7 +83,7 @@ end
 
 local inStr = ""
 T2:CreateInput({
-    Name = "Enter Vector3 / Position",
+    Name = "POSITIONNN",
     PlaceholderText = "Example: 114, 3.4, 13998",
     RemoveTextAfterFocusLost = false,
     Callback = function(val) inStr = val end
@@ -130,7 +130,7 @@ T3:CreateButton({
                 end
             end
         end
-        if #opts > 0 then drop:Refresh(opts) else drop:Refresh({"No parts found on this map"}) end
+        if #opts > 0 then drop:Refresh(opts) else drop:Refresh({"NOOO DABUX NOOOOOO DABUXXXXX"}) end
     end
 })
 
@@ -193,55 +193,14 @@ T4:CreateToggle({
     CurrentValue = false,
     Flag = "A2",
     Callback = function(v)
-        activeLoot = v
-        if activeLoot then
-            task.spawn(function()
-                while activeLoot do
-                    local list = {}
-                    for _, o in ipairs(workspace:GetDescendants()) do
-                        local nameMatch = table.find(lootNames, o.Name)
-                        local folderMatch = o.Parent and (o.Parent.Name == "dragfolder" or o.Parent.Name == "DragFolder") and table.find(lootNames, o.Name)
-                        if nameMatch or folderMatch then
-                            local p = o:FindFirstChildWhichIsA("ProximityPrompt", true)
-                            if p and p.Enabled and p.Parent then table.insert(list, o) end
-                        end
-                    end
-                    if #list == 0 then task.wait(5) continue end
-                    
-                    for _, o in ipairs(list) do
-                        if not activeLoot then break end
-                        local p = o:FindFirstChildWhichIsA("ProximityPrompt", true)
-                        local loc = o:IsA("Model") and (o.PrimaryPart and o.PrimaryPart.Position or o:FindFirstChildWhichIsA("BasePart", true).Position) or o.Position
-                        if loc and p and p.Enabled then
-                            tp(loc)
-                            task.wait(0.4)
-                            if p and p.Enabled then
-                                if fireproximityprompt then fireproximityprompt(p) end
-                                if firesignal then firesignal(p.Triggered, lp) end
-                                local cl = 0
-                                while activeLoot and p and p.Parent and p.Enabled and cl < 30 do
-                                    task.wait(0.1)
-                                    cl = cl + 1
-                                end
-                                task.wait(0.3)
-                                tp(vendorPos)
-                                task.wait(0.5)
-                                local vendor = nil
-                                for _, o2 in ipairs(workspace:GetDescendants()) do
-                                    if o2:IsA("ProximityPrompt") and o2.Enabled and o2.Parent then
-local d = o2.Parent:IsA("BasePart") and (o2.Parent.Position - vendorPos).Magnitude or 999
-                                    if d < 15 then vendor = o2 break end
-                                    end
-                                 end
-                                 if vendor then
-                                 if fireproximityprompt then fireproximityprompt(vendor) end
-                                    if firesignal then firesignal(vendor.Triggered, lp) end
-                                    task.wait(0.5)end
-                              end
-                           end
-                        end
-                        task.wait(0.5)
-                  end
-                  end)end
+       Rayfield:Notify({
+	Title = "Disabled.",
+	Content = "Reason: Breaks whole code. and crashes the system.",
+	Duration = 6.5, 
+	Image = 4483345998,
+})
+
+                
+                  
          end
    })
