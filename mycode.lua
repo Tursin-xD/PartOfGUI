@@ -1,9 +1,9 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-   Name = "Game Teleports (Dabux Scanner)",
-   LoadingTitle = "Dabux Scanning System...",
-   LoadingSubtitle = "by Assistant",
+   Name = "Dark Journey [ALPHA]",
+   LoadingTitle = "Dark Journey Game exploits",
+   LoadingSubtitle = "by Crabby",
    ConfigurationSaving = { Enabled = false },
    Discord = { Enabled = false },
    KeySystem = false
@@ -35,7 +35,7 @@ local function serverHop()
             local qot = queue_on_teleport or (syn and syn.queue_on_teleport)
             qot([[
                 repeat task.wait() until game:IsLoaded()
-            Going to be updated! Sorry for disturbing...
+            loadstring(game:HttpGet('https://raw.githubusercontent.com/Tursin-xD/PartOfGUI/refs/heads/main/mycode.lua'))()
             ]])
         end
 
