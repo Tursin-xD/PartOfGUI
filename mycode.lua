@@ -33,12 +33,8 @@ local function hop()
             local qot = queue_on_teleport or (syn and syn.queue_on_teleport)
             qot([[
                 repeat task.wait() until game:IsLoaded()
-                loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
-                task.wait(1)
-                if _G.RayfieldWindow then
-                    local t3 = _G.RayfieldWindow:CreateTab("Dabux Scanner", 4483362458)
-                    t3:CreateToggle({Name = "Auto-Dabux", CurrentValue = true})
-                end
+                    loadstring(game:HttpGet('https://raw.githubusercontent.com/Tursin-xD/PartOfGUI/refs/heads/main/mycode.lua'))()
+                    --restarts itself bruhh
             ]])
         end
 
