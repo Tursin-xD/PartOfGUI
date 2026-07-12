@@ -1,4 +1,11 @@
-local Lib = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
+local Lib= nil
+if _G.Gen2 then
+--hmm.
+Lib= loadstring(game:HttpGet("https://raw.githubusercontent.com/SyncUnofficial/Rayfield_Gen_2_fanmade/main/source.lua"))()
+else
+Lib = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+end
 local Win = Lib:CreateWindow({
     Name = "Dark Journey [ALPHA]",
     LoadingTitle = "Dark Journey [ALPHA] Exploitss",
