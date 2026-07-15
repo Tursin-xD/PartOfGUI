@@ -2,7 +2,7 @@
 local Rayfield= nil
 if _G.Gen2 then
 --hmm.
-Rayfield= loadstring(game:HttpGet("https://sirius.menu/gen2"))()
+Rayfield= loadstring(game:HttpGet("https://raw.githubusercontent.com/SyncUnofficial/Rayfield_Gen_2_fanmade/refs/heads/main/source.lua"))()
 else
 Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
