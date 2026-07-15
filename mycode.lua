@@ -1,13 +1,11 @@
--- Load the Rayfield Library
-local Rayfield= nil
+local Lib= nil
 if _G.Gen2 then
 --hmm.
-Rayfield= loadstring(game:HttpGet("https://raw.githubusercontent.com/SyncUnofficial/Rayfield_Gen_2_fanmade/refs/heads/main/source.lua"))()
+Lib= loadstring(game:HttpGet("https://raw.githubusercontent.com/SyncUnofficial/Rayfield_Gen_2_fanmade/main/source.lua"))()
 else
-Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+Lib = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 end
-local Lib=Rayfield
 local Win = Lib:CreateWindow({
     Name = "Dark Journey [ALPHA]",
     LoadingTitle = "Dark Journey [ALPHA] Exploitss",
