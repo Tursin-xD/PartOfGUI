@@ -1,7 +1,7 @@
 local Lib= nil
 if _G.Gen2 then
 --hmm.
-Lib= loadstring(game:HttpGet("https://raw.githubusercontent.com/SyncUnofficial/Rayfield_Gen_2_fanmade/main/source.lua"))()
+Lib= loadstring(game:HttpGet("sirius.menu/gen2"))()
 else
 Lib = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
